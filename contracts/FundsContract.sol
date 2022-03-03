@@ -1,25 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-contract Funds{
+import "./OwnerContract.sol";
+  
+contract Funds is Owner{
     mapping(address => bool) addedDonors;
     mapping(uint => address) index_to_donor;
 
-    address public owner;
     uint8 numberOfDonors;
-
-    constructor(){
-        owner = msg.sender;
-    }
 
     modifier limitAmount(uint amount){
         require(amount <= 1000000000000000000 , "Cannot withdraw more than 1 Ether");
         _;
     }
-    modifier onlyOwner(){
-        require(owner == msg.sender,"Only Owner have access !");
-        _;
-    }
+   
     receive() external payable{}
     function addFunds() external payable{
         if(addedDonors[msg.sender] == false){
