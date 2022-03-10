@@ -8,14 +8,24 @@ function App() {
   const [web3Api,setWeb3Api] = useState({
     provider:null,
     web3:null,
-    contract:null
+    contract:null,
+    isProviderLoaded:false
   });
 
   const [account,setAccount] = useState(null);
   const [balance,setBalance] = useState(null);
+  const canConnectToNetWork = account && web3Api.contract ;
 
   const setAccountListener = provider=>{
-    provider.on("accountsChanged",accounts=>setAccount(accounts[0]));
+    provider.on("accountsChanged",accounts=>window.location.reload());
+    provider.on("chainChanged",res=>window.location.reload());
+    // provider._jsonRpcConnection.events.on("notification",payload=>{
+    //   const {method} = payload;
+
+    //   if(method == "metamask_unlockStateChanged" && account){
+    //     setAccount(null);
+    //   }
+    // })
   }
 
   useEffect(()=>{
@@ -25,17 +35,22 @@ function App() {
         provider = window.ethereum;
       }else if(window.web3){
         provider = window.web3.currentProvider;
-      }else if(!process.env.production){
-        provider = new Web3.providers.HttpProvider("http://127.0.0.1:7545");
       }
-      setAccountListener(provider)
-      const contract = await loadContract("Funds",provider);
-      console.log(contract)
-      setWeb3Api({
-        web3:new Web3(provider),
-        provider,
-        contract
-      })
+      if(provider){
+        setAccountListener(provider)
+        const contract = await loadContract("Funds",provider);
+        setWeb3Api({
+          web3:new Web3(provider),
+          provider,
+          contract,
+          isProviderLoaded:true
+        })
+      }else{
+        setWeb3Api(prev=>({
+          ...prev,
+          isProviderLoaded:true
+        }))
+      }
     }
     loadProvider();
   },[])
@@ -59,22 +74,30 @@ function App() {
 
   const handleDonation = useCallback(async()=>{
     const {contract,web3} = web3Api;
-    contract.addFunds({from:account,value:"1000000000000000"})
+    await contract.addFunds({from:account,value:"1000000000000000"})
     window.location.reload();
   },[web3Api,account])
 
   const handleWithdrawal = useCallback(async()=>{
     const {contract,web3} = web3Api;
-    contract.withdraw("1000000000000000",{from:account});
+    await contract.withdraw("1000000000000000",{from:account});
     window.location.reload();
   },[web3Api,account])
 
+
+
   return (
     <div className="App">
-      <h3>{!account ? <button onClick={async()=>web3Api.provider.request({method:"eth_requestAccounts"})}>Connect</button> : account}</h3>
-      <h2>Current Balance is {balance} Eth</h2>
-      <button onClick={handleDonation}>Donate</button>
-      <button onClick={handleWithdrawal}>Withdraw</button>
+    {!web3Api.isProviderLoaded ? <p>...Loading ! </p> : (
+      !web3Api.provider ? <p>No Wallet Found ! Install MetaMask</p> :
+      <>
+        <h3>{!account ? <button onClick={async()=>web3Api.provider.request({method:"eth_requestAccounts"})}>Connect</button> : account}</h3>
+        <h2>Current Balance is {balance} Eth</h2>
+        <button onClick={handleDonation} disabled={!canConnectToNetWork}>Donate</button>
+        <button onClick={handleWithdrawal} disabled={!canConnectToNetWork}>Withdraw</button>
+        {!canConnectToNetWork ? <p>Connect to Ganache Netwok !</p> : null}
+      </>
+    )}
     </div>
   );
 }
