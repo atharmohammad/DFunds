@@ -2,7 +2,13 @@
   "contractName": "IFunds",
   "abi": [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundraiser",
+          "type": "uint256"
+        }
+      ],
       "name": "addFunds",
       "outputs": [],
       "stateMutability": "payable",
@@ -14,6 +20,11 @@
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fundraiser",
+          "type": "uint256"
         }
       ],
       "name": "withdraw",
@@ -22,7 +33,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"addFunds\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IFunds.sol\":\"IFunds\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IFunds.sol\":{\"keccak256\":\"0x684746683be2b643980a03a44acd3d8a11f77af93cd1a4d8a4b943902639a8b3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f8ccfd792f06d07a40e521bc249609b059323d58332281c1424242fa9b9b911a\",\"dweb:/ipfs/QmRmvgkVcEr6cwFzjAvbTaLHiDWW7Rq3EfNxZRmKRYt1dC\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fundraiser\",\"type\":\"uint256\"}],\"name\":\"addFunds\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"fundraiser\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IFunds.sol\":\"IFunds\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IFunds.sol\":{\"keccak256\":\"0xdd7030a3ec4b3f707ad5b3c5df2ad8b058f24275fa3ff4ed146b7334b92097ed\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c69c92d1ca6795a3573c3ff3afe523bd1a330606ff5cf8bc50a50d5b6d4d2cb7\",\"dweb:/ipfs/QmZ4ohU1yYCK1kmTZnQyVqYAZhF7nQ52C7pM3NWaZ1NfTp\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -30,21 +41,21 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.9.0;\r\n\r\ninterface IFunds{\r\n    function addFunds() external payable;\r\n    function withdraw(uint amount)external;\r\n}",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.9.0;\r\n\r\ninterface IFunds{\r\n    function addFunds(uint fundraiser) external payable;\r\n    function withdraw(uint amount,uint fundraiser)external;\r\n}",
   "sourcePath": "D:\\Development\\blockchain\\faucet\\contracts\\IFunds.sol",
   "ast": {
     "absolutePath": "project:/contracts/IFunds.sol",
     "exportedSymbols": {
       "IFunds": [
-        160
+        289
       ]
     },
-    "id": 161,
+    "id": 290,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 151,
+        "id": 276,
         "literals": [
           "solidity",
           ">=",
@@ -63,17 +74,17 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 160,
+        "id": 289,
         "linearizedBaseContracts": [
-          160
+          289
         ],
         "name": "IFunds",
         "nameLocation": "79:6:1",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "functionSelector": "a26759cb",
-            "id": 154,
+            "functionSelector": "be999705",
+            "id": 281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -81,45 +92,18 @@
             "nameLocation": "101:8:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 152,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "109:2:1"
-            },
-            "returnParameters": {
-              "id": 153,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "128:0:1"
-            },
-            "scope": 160,
-            "src": "92:37:1",
-            "stateMutability": "payable",
-            "virtual": false,
-            "visibility": "external"
-          },
-          {
-            "functionSelector": "2e1a7d4d",
-            "id": 159,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "withdraw",
-            "nameLocation": "144:8:1",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 157,
+              "id": 279,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 156,
+                  "id": 278,
                   "mutability": "mutable",
-                  "name": "amount",
-                  "nameLocation": "158:6:1",
+                  "name": "fundraiser",
+                  "nameLocation": "115:10:1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 159,
-                  "src": "153:11:1",
+                  "scope": 281,
+                  "src": "110:15:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -127,10 +111,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 155,
+                    "id": 277,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "153:4:1",
+                    "src": "110:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -139,41 +123,123 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "152:13:1"
+              "src": "109:17:1"
             },
             "returnParameters": {
-              "id": 158,
+              "id": 280,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "173:0:1"
+              "src": "143:0:1"
             },
-            "scope": 160,
-            "src": "135:39:1",
+            "scope": 289,
+            "src": "92:52:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "441a3e70",
+            "id": 288,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdraw",
+            "nameLocation": "159:8:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 286,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 283,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "173:6:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 288,
+                  "src": "168:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 282,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "168:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 285,
+                  "mutability": "mutable",
+                  "name": "fundraiser",
+                  "nameLocation": "185:10:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 288,
+                  "src": "180:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 284,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "180:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "167:29:1"
+            },
+            "returnParameters": {
+              "id": 287,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "204:0:1"
+            },
+            "scope": 289,
+            "src": "150:55:1",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 161,
-        "src": "69:108:1",
+        "scope": 290,
+        "src": "69:139:1",
         "usedErrors": []
       }
     ],
-    "src": "33:144:1"
+    "src": "33:175:1"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/IFunds.sol",
     "exportedSymbols": {
       "IFunds": [
-        160
+        289
       ]
     },
-    "id": 161,
+    "id": 290,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 151,
+        "id": 276,
         "literals": [
           "solidity",
           ">=",
@@ -192,17 +258,17 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 160,
+        "id": 289,
         "linearizedBaseContracts": [
-          160
+          289
         ],
         "name": "IFunds",
         "nameLocation": "79:6:1",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "functionSelector": "a26759cb",
-            "id": 154,
+            "functionSelector": "be999705",
+            "id": 281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -210,45 +276,18 @@
             "nameLocation": "101:8:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 152,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "109:2:1"
-            },
-            "returnParameters": {
-              "id": 153,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "128:0:1"
-            },
-            "scope": 160,
-            "src": "92:37:1",
-            "stateMutability": "payable",
-            "virtual": false,
-            "visibility": "external"
-          },
-          {
-            "functionSelector": "2e1a7d4d",
-            "id": 159,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "withdraw",
-            "nameLocation": "144:8:1",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 157,
+              "id": 279,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 156,
+                  "id": 278,
                   "mutability": "mutable",
-                  "name": "amount",
-                  "nameLocation": "158:6:1",
+                  "name": "fundraiser",
+                  "nameLocation": "115:10:1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 159,
-                  "src": "153:11:1",
+                  "scope": 281,
+                  "src": "110:15:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -256,10 +295,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 155,
+                    "id": 277,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "153:4:1",
+                    "src": "110:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -268,27 +307,109 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "152:13:1"
+              "src": "109:17:1"
             },
             "returnParameters": {
-              "id": 158,
+              "id": 280,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "173:0:1"
+              "src": "143:0:1"
             },
-            "scope": 160,
-            "src": "135:39:1",
+            "scope": 289,
+            "src": "92:52:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "441a3e70",
+            "id": 288,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdraw",
+            "nameLocation": "159:8:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 286,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 283,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "173:6:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 288,
+                  "src": "168:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 282,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "168:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 285,
+                  "mutability": "mutable",
+                  "name": "fundraiser",
+                  "nameLocation": "185:10:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 288,
+                  "src": "180:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 284,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "180:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "167:29:1"
+            },
+            "returnParameters": {
+              "id": 287,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "204:0:1"
+            },
+            "scope": 289,
+            "src": "150:55:1",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 161,
-        "src": "69:108:1",
+        "scope": 290,
+        "src": "69:139:1",
         "usedErrors": []
       }
     ],
-    "src": "33:144:1"
+    "src": "33:175:1"
   },
   "compiler": {
     "name": "solc",
@@ -296,7 +417,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-04T15:47:26.692Z",
+  "updatedAt": "2022-03-25T09:17:16.728Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
