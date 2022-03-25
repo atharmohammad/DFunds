@@ -1,6 +1,6 @@
 # Dfunds
 A decentralised funding applicaton , where any funding can be created and anyone can track the fundings and withdrawal for a particular fundraiser which makes all transaction,and use of donations public and anyone can question the use of the donatons. 
-The creator of fundraiser can also put the use of each amount with some proofs , which can make the fundings more trustable and motivate user to donate in it
+The creator of fundraiser can also put the use of each withdraw amount with some proofs , which can make the fundings more trustable and motivate user to donate in it
 
 
 ## 🔥 Getting Started
