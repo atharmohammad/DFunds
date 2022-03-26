@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-import "./OwnerContract.sol";
+import "./AdminContract.sol";
 import "./LogContract.sol"; 
 import "./IFunds.sol";
 
-contract Funds is Owner,Log,IFunds{
+contract Funds is Admin,Log,IFunds{
     
     struct Fundraiser{
         string name;
         string description;
         uint amount;
         address creator;
+        bool stopped;
     }
 
     mapping(uint => Fundraiser) Fundraisers;
@@ -33,9 +34,6 @@ contract Funds is Owner,Log,IFunds{
     function emitLog() override public view returns(address){
         return msg.sender;
     }
-    // function read()external pure returns(string){
-    //     return Name;
-    // }
 
     receive() external payable{}
     function addFunds(uint fundraiser) override external payable{
@@ -69,6 +67,14 @@ contract Funds is Owner,Log,IFunds{
         Fundraisers[numberOfFundraisers].creator = msg.sender; 
         numberofDonors.push(0);
         numberOfFundraisers++;
+    }
+
+    function stopFunding(uint fundraiser) external onlyCreatorOrAdmin(Fundraisers[fundraiser].creator){
+        Fundraisers[fundraiser].stopped = true;
+    }
+
+    function startFunding(uint fundraiser) external onlyAdmin(){
+        Fundraisers[fundraiser].stopped = false;
     }
 }
 
