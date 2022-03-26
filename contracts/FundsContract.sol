@@ -35,7 +35,28 @@ contract Funds is Admin,Log,IFunds{
         return msg.sender;
     }
 
-    receive() external payable{}
+    function createFundraiser(string memory name , string memory description , uint targetAmount)external{
+        Fundraisers[numberOfFundraisers].name = name;
+        Fundraisers[numberOfFundraisers].description = description; 
+        Fundraisers[numberOfFundraisers].amount = targetAmount; 
+        Fundraisers[numberOfFundraisers].creator = msg.sender; 
+        numberofDonors.push(0);
+        numberOfFundraisers++;
+    }
+
+    function getFundraisers()external view returns (Fundraiser[] memory){
+        Fundraiser [] memory fundraisers = new Fundraiser [](numberOfFundraisers);
+        for (uint i = 0 ;i<numberOfFundraisers; i++){
+            fundraisers[i] = Fundraisers[i];
+        }
+        return fundraisers;
+    }
+
+    function withdraw(uint amount,uint fundraiser)external override onlyFundraiserOwner(fundraiser) limitAmount(Fundraisers_to_Funds[fundraiser],amount){
+        payable(msg.sender).transfer(amount);
+        Fundraisers_to_Funds[fundraiser] -= amount;
+    }
+
     function addFunds(uint fundraiser) override external payable{
         if(addedDonors[fundraiser][msg.sender] == false){
             addedDonors[fundraiser][msg.sender] = true;
@@ -47,26 +68,12 @@ contract Funds is Admin,Log,IFunds{
     // function transferOwnership(address newOwner) external onlyOwner(){
     //     owner = newOwner;
     // }
-    function withdraw(uint amount,uint fundraiser)external override onlyFundraiserOwner(fundraiser) limitAmount(Fundraisers_to_Funds[fundraiser],amount){
-        payable(msg.sender).transfer(amount);
-        Fundraisers_to_Funds[fundraiser] -= amount;
-    }
-
     function getDonatorsOfFundraiser(uint fundraiser) external view returns (address[] memory){
         address [] memory donators = new address [](numberofDonors[fundraiser]);
         for(uint i = 0; i<numberofDonors[fundraiser]; i++){
             donators[i] = index_to_donor[fundraiser][i];
         }
         return donators;
-    }
-
-    function createFundraiser(string memory name , string memory description , uint targetAmount)external{
-        Fundraisers[numberOfFundraisers].name = name;
-        Fundraisers[numberOfFundraisers].description = description; 
-        Fundraisers[numberOfFundraisers].amount = targetAmount; 
-        Fundraisers[numberOfFundraisers].creator = msg.sender; 
-        numberofDonors.push(0);
-        numberOfFundraisers++;
     }
 
     function stopFunding(uint fundraiser) external onlyCreatorOrAdmin(Fundraisers[fundraiser].creator){
