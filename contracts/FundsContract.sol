@@ -19,8 +19,8 @@ contract Funds is Admin,Log,IFunds{
     mapping(uint => mapping(address => bool)) addedDonors;
     mapping(uint => mapping(uint => address)) index_to_donor;
     mapping(uint => uint) Fundraisers_to_Funds;
-    uint [] numberofDonors;
-    uint numberOfFundraisers;
+    uint64 [] numberofDonors;
+    uint64 numberOfFundraisers;
  
     modifier limitAmount(uint totalFunds,uint amount){
         require(amount <= totalFunds , "Cannot withdraw more than Total Funds");
